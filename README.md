@@ -24,13 +24,12 @@ lib
 │    │───api
 │    |    │──auth
 │    |    |   └──auth_api.dart
-│    |    |
 │    |    │──api.dart
 │    |    │──favorite_api.dart
 │    |    │──house_api.dar
 |    |    │──offer_api.dart
-│    |     └──rating_api.dart
-|    │───repository
+│    |    └──rating_api.dart
+|    └───repository
 │         │──favorite_repository.dart
 │         │──house_repository.dart
 │         │──offer_repository.dart
