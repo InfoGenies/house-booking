@@ -4,87 +4,81 @@ A new Flutter project. Welcome to HouseBooker, the cutting-edge Flutter applicat
 ## Directory Structure
 ```
 lib
-│───constant.dart
 │───main.dart
-└───core
-│    │───service
-│    |    │──local
-│    |    |   └──local_carte.dart
-│    |    |──remote
-│    |        │──auth_service.dart
-│    |        │──checkout_service.dart
-│    |        │──firestore_user.dart
-│    |        └──home_service.dart     
-│    |───view_model
-│    |    │──auth_view_model.dart
-│    |    │──checkout_view_model.dart
-│    |    │──control_view_model.dart
-│    |    │──controller.dart
-│    |    │──home_view_model.dart
-│    |    │──profil_view_model.dart
-│    |    └──select_image_view_model.dart     
-│    |───network_viewmodel.dart
-└───extension
-│    │──color_extension.dart
-│    └──sstring_extension.dart
-│
+|
+└───components
+│    
+│───constants
+|     └──onstant.dart
+|
+|───controllers
+│    │──auth_controller.dart
+│    │──controller.dart
+│    │──favorite_controller.dart
+│    │──house_controller.dart
+│    │──nav_bar_controller.dart
+│    │──offer_controller.dart
+│    └──rating_controller.dart
+|
+└───data
+│    │───api
+│    |    │──auth
+│    |    |   └──auth_api.dart
+│    |    |
+│    |    │──api.dart
+│    |    │──favorite_api.dart
+│    |    │──house_api.dar
+|    |    │──offer_api.dart
+│    |     └──rating_api.dart
+|    │───repository
+│         │──favorite_repository.dart
+│         │──house_repository.dart
+│         │──offer_repository.dart
+│         └──rating_repository.dart
+|
 └───helper
-│    └──binding.dart
+|    │──binding.dart
+│    │──file_picker_helper.dart
+│    └──location_helper.dart 
 │
-└───model
-│    │──category_model.dart
-│    │──current_adress.dart
-│    │──order_model.dart
-│    │──product_model.dart
-│    │──product_model.g.dart
-│    └──user_model.dart   
-└───view
-│    │──cart
-│    │   └──carte_view.dart   
-│    │──category
-│    │   └──category_grid_view.dart
+└───models
+│    │──chat_item_model.dart
+│    │──city.dart
+│    │──favorite.dart
+│    │──house.dart
+│    │──offer.dart
+|    │──picture.dart
+|    │──rating.dart
+│    └──user.dart   
+└───view  
+│    │──favorite
+│    │   └──favorite_view.dart
 │    │ 
-│    │──checkout 
-│    │   │──widgets
-│    │       │──adress_view.dart
-│    │       │──delivery_time.dart
-│    │       └──summary.dart 
-│    └────check_out_view.dart
+│    └──city
+|    |     └──city_view.dart
 │    │ 
-│    │──details
-│    │   └──details_view.dart
+│    │──authentification
+│    │   └──dauthentification_view.dart
 │    │ 
 │    │──home
-│    │   │──component
-│    │   │   │──category_view.dart
-│    │   │   │──product_view.dart
-│    │   │   └──search_text_form_field.dart 
-│    │   └──home_view.dart
+|    |   │──home_tap.dart
+│    |   └──home_view.dart 
+│    |    
+│    │──house    
+│    │   │──create_house_screen.dart
+│    │   │──create_offer_screen.dart
+│    │   │──house_details_view.dart
+│    │   │──my_houses_screen.dart  
+│    │   └──offers_screen.dart
 │    │ 
-│    │──login    
-│    │   │──widgets
-│    │   │   │──custtom_button.dart
-│    │   │   │──custtom_button_social.dart
-│    │   │   │──custtom_text.dart
-│    │   │   │──custtom_text_form_field.dart
-│    │   │   └──summary.dart 
-│    │   │──login_view.dart   
-│    │   └──register_view.dart
-│    │ 
-│    │──oder_history
-│    │   │──widgets
-│    │   │   └──order_detailed.dart
-│    │   └──order_history_view.dart
-│    │ 
-│    │─profile   
-│    │  │──widgets 
-│    │  │   │──cards_view.dart 
-│    │  │   │──edite_profile_view.dart
-│    │  │   └──notifications_view.dart
-│    │  └──profile_view.dart
+│    │──profile
+│    │   └──profile_view.dart
+|    |
+│    │──search
+│    │   └──search_view.dart 
 │    │
 │    │
-│    └──welcome_page_view.dart 
+│    └──splash_screen.dart 
  └──.
 
 
