@@ -27,7 +27,6 @@ class HouseController extends GetxController with HouseRepository {
   }
 
   Future<void> getHouses(String? cityId, String? userId) async {
-    myHouses.clear();
     isHouseLoading = false;
     myHouses.addAll(await super.getHouse(cityId, userId));
     update();
@@ -46,17 +45,18 @@ class HouseController extends GetxController with HouseRepository {
   }
 
   @override
-  Future<House?> createHouse(House house) async {
+  Future<String?> createHouse(House house) async {
     await super.createHouse(house);
     //   await refreshData(parameters: Parameters(myHouses: true));
     return null;
   }
 
   @override
-  Future<House?> updateHouse(
+  Future<String?> updateHouse(
       {required String id,
       required House data,
       List<Picture> deletePic = const []}) async {
+    print('the updating controoler was called');
     await super.updateHouse(
       id: id,
       data: data,
@@ -64,6 +64,15 @@ class HouseController extends GetxController with HouseRepository {
     );
     // await refreshData(parameters: Parameters(myHouses: true));
     return null;
+  }
+
+  Future<void> refreshData(String? userId) async {
+    myHouses.clear();
+    isHouseLoading = true;
+    update();
+    Future.delayed(const Duration(seconds: 1), () async {
+      await getHouses(null, userId);
+    });
   }
 
   @override

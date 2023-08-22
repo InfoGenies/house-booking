@@ -1,7 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:house_booking/models/City.dart';
 import 'package:path/path.dart';
-
 import '../../models/house.dart';
 import '../../models/municipality.dart';
 import '../../models/picture.dart';
@@ -12,8 +11,9 @@ class HouseRepository {
   // here we make dependency injection
   HouseApi houseApi = HouseApi();
 
-  Future<List<House>> getHouse(String? cityId , String? userId) async {
-    List<Map<String, dynamic>>? data = await houseApi.getHouse(cityId: cityId,userId: userId);
+  Future<List<House>> getHouse(String? cityId, String? userId) async {
+    List<Map<String, dynamic>>? data =
+        await houseApi.getHouse(cityId: cityId, userId: userId);
     List<House> houses = [];
 
     for (var element in data!) {
@@ -22,24 +22,25 @@ class HouseRepository {
     return houses;
   }
 
-  Future<House?> createHouse(House house) async {
-    Map<String, dynamic> data = house.toJson();
+  Future<String?> createHouse(House house) async {
+    List<MultipartFile> pictureFiles = [];
     for (int i = 0; i < house.pictures.length; i++) {
       MultipartFile multipartFile = await MultipartFile.fromFile(
         house.pictures[i].picture,
         filename: basename(house.pictures[i].picture),
       );
-      data['pictures'].add({'picture': multipartFile});
+      pictureFiles.add(multipartFile);
     }
-    // here we put ListFormat.multiCompatible  cause is the solution to add array in form data.
-    FormData format = FormData.fromMap(data, ListFormat.multiCompatible);
+    Map<String, dynamic> houseData = house.toJson();
 
-    Map<String, dynamic>? responseData =
-        await houseApi.createHouse(data: format);
+    houseData['picture'] = pictureFiles;
+
+    FormData formData = FormData.fromMap(houseData);
+
+    String? responseData = await houseApi.createHouse(data: formData);
 
     if (responseData != null) {
-      House response = House.fromMap(responseData);
-      return response;
+      return responseData;
     }
     return null;
   }
@@ -54,20 +55,24 @@ class HouseRepository {
     await houseApi.houseInfo(houseId: houseId, methode: Methode.DELETE);
   }
 
-  Future<House?> updateHouse(
+  Future<String?> updateHouse(
       {required String id,
       required House data,
       List<Picture> deletePic = const []}) async {
-    Map<String, dynamic> house = data.toJson();
-    house['pictures'] = [];
+    List<MultipartFile> pictureFiles = [];
 
     for (int i = 0; i < data.pictures.length; i++) {
-      MultipartFile multipartFile = await MultipartFile.fromFile(
-        data.pictures[i].picture,
-        filename: basename(data.pictures[i].picture),
-      );
-      house['pictures'].add({'picture': multipartFile});
+      if (!data.pictures[i].isUrl) {
+        MultipartFile multipartFile = await MultipartFile.fromFile(
+          data.pictures[i].picture,
+          filename: basename(data.pictures[i].picture),
+        );
+        pictureFiles.add(multipartFile);
+      }
     }
+
+    Map<String, dynamic> houseData = data.toJson();
+    houseData['picture'] = pictureFiles;
     if (deletePic.isNotEmpty) {
       try {
         for (int i = 0; i < deletePic.length; i++) {
@@ -78,16 +83,15 @@ class HouseRepository {
       }
     }
 
-    FormData formdata = FormData.fromMap(house, ListFormat.multiCompatible);
+    FormData formData = FormData.fromMap(houseData);
 
     Map<String, dynamic>? responseData = await houseApi.houseInfo(
       houseId: id,
       methode: Methode.PATCH,
-      data: formdata,
+      data: formData,
     );
     if (responseData != null) {
-      House response = House.fromMap(responseData);
-      return response;
+      return 'The Data Is Updated';
     }
     return null;
   }
@@ -97,13 +101,12 @@ class HouseRepository {
 
     List<City> cities = [];
     data?.forEach((element) {
-
       cities.add(City.fromMap(element));
-
     });
 
     return cities;
   }
+
   Future<List<Municipality>?> getMunicipalities({String cityId = ''}) async {
     List<Map<String, dynamic>>? data = await houseApi.getMunicipalities(
       cityId: cityId,

@@ -48,7 +48,7 @@ class ProfileView extends StatelessWidget {
                                 icon: FontAwesomeIcons.house,
                                 title: 'My houses',
                                 onTap: () =>
-                                    Get.to(() =>  MyHousesScreen(userId:authController.getId()!)),
+                                    Get.to(() =>  MyHousesScreen(user: authController.user!)),
                               ),
                               ProfileTapItem(
                                 icon: FontAwesomeIcons.clockRotateLeft,

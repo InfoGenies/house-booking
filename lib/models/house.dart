@@ -44,6 +44,7 @@ class House {
 
   factory House.fromMap(Map<String, dynamic> json) {
     List<dynamic> jsonPictures = json['pictures'];
+    double starsValue = json['stars'] != null ? json['stars'].toDouble() : 0.0;
 
     return House(
         id: json['_id'],
@@ -57,7 +58,7 @@ class House {
         locationLatitude: json['locationLatitude'],
         locationLongitude: json['locationLongitude'],
         isAvailable: json['isAvailable'],
-        stars: json['stars'].toDouble(),
+        stars: starsValue,
         numReviews: json['numReviews'],
         createdAt: DateFormat('yyyy-MM-ddTHH:mm:ss')
             .parse(json['createdAt'].replaceAll('.000Z', '')),
@@ -68,21 +69,22 @@ class House {
 
   Map<String, dynamic> toJson() {
     return {
-      'id': id,
       'houseType': houseType,
       'title': title,
-      'description': houseType,
+      'description': description,
       'rooms': rooms,
       'bathrooms': bathrooms,
       'kitchens': kitchens,
       'bedrooms': bedrooms,
-      'location_latitude': locationLatitude,
-      'location_longitude': locationLongitude,
+      'locationLatitude': locationLatitude,
+      'locationLongitude': locationLongitude,
       'isAvailable': isAvailable,
       'stars': stars,
       'numReviews': numReviews,
-      'municipality': municipality?.id,
-      'pictures': pictures.map((picture) => picture.toJson()).toList()
+      'userId': owner?.id,
+      'municipalityId': municipality?.id,
+      'isUrl': true,
+      'picture': pictures.map((picture) => picture.toJson()).toList()
     };
   }
 }

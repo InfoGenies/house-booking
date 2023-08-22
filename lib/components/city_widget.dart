@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../constants/constant.dart';
 import '../models/City.dart';
 import '../views/city/city_view.dart';
+import 'city_screen.dart';
 
 class CityWidget extends StatelessWidget {
   final double? height;
@@ -19,7 +20,7 @@ class CityWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () => Get.to(
-        () => CityView(city: city),
+            () => CityScreen(city: city),
         transition: Transition.upToDown,
       ),
       child: Hero(

@@ -7,7 +7,7 @@ import '../../components/empty_screen.dart';
 import '../../components/house_widget.dart';
 import '../../components/swipe_help.dart';
 import '../../constants/constant.dart';
-import '../../controllers/controller.dart';
+import '../../controllers/auth_controller.dart';
 import '../../controllers/favorite_controller.dart';
 
 class FavoriteView extends StatefulWidget {
@@ -18,10 +18,12 @@ class FavoriteView extends StatefulWidget {
 }
 
 class _FavoriteViewState extends State<FavoriteView> {
+  FavoriteController favoriteController = Get.find<FavoriteController>() ;
+  AuthController authController = Get.find<AuthController>() ;
   @override
   void initState() {
+    print('initState is lunched ') ;
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-
       if (favoriteController.isEmpty) {
         favoriteController.changeLoadingState(true);
         await Future.delayed(const Duration(milliseconds: 300));
@@ -32,6 +34,12 @@ class _FavoriteViewState extends State<FavoriteView> {
     });
 
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    favoriteController.changeLoadingState(true);
+    super.dispose();
   }
 
   @override
@@ -97,7 +105,9 @@ class _FavoriteViewState extends State<FavoriteView> {
                                                             favoriteController
                                                                 .favorites[
                                                                     index]
-                                                                .id!,authController.getId()! );
+                                                                .id!,
+                                                            authController
+                                                                .getId()!);
                                                   },
                                                   child: HouseWidget(
                                                     margin:

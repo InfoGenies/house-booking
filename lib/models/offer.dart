@@ -14,41 +14,43 @@ class Offer {
   late House house;
   User? user;
 
-  Offer({this.id,
-    this.status,
-    this.pricePerDay,
-    this.startDate,
-    this.endDate,
-    this.createdAt,
-    this.rated,
-    required this.house,
-    this.user});
+  Offer(
+      {this.id,
+      this.status,
+      this.pricePerDay,
+      this.startDate,
+      this.endDate,
+      this.createdAt,
+      this.rated,
+      required this.house,
+      this.user});
 
   factory Offer.fromMap(Map<String, dynamic> json) {
     return Offer(
         id: json['_id'],
         status: json['status'],
         pricePerDay: json['price_per_day'],
-        startDate: DateFormat('yyyy-MM-ddTHH:mm:ss').parse(json['start_date'].replaceAll('.000Z', '')),
-        endDate: DateFormat('yyyy-MM-ddTHH:mm:ss').parse(json['end_date'].replaceAll('.000Z', '')),
-        createdAt: DateFormat('yyyy-MM-ddTHH:mm:ss').parse(json['created_at'].replaceAll('.000Z', '')),
+        startDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+            .parse(json['start_date'].replaceAll('.000Z', '')),
+        endDate: DateFormat('yyyy-MM-ddTHH:mm:ss')
+            .parse(json['end_date'].replaceAll('.000Z', '')),
+        createdAt: DateFormat('yyyy-MM-ddTHH:mm:ss')
+            .parse(json['created_at'].replaceAll('.000Z', '')),
         rated: json['rated'],
-        house: House.fromMap(json['house']) ,
+        house: House.fromMap(json['house']),
         user: User.fromMap(json['user']));
   }
 
   Map<String, dynamic> toJson() {
     return {
-    'status' : status,
-    'price_per_day' : pricePerDay,
-    'start_date': startDate?.toIso8601String(),
-    'end_date' : endDate?.toIso8601String(),
-    'rated' : rated,
-    'house' : house.id,
-    'user' :  user?.id
-  };
-
-}
-
+      'status': status,
+      'price_per_day': pricePerDay,
+      'startDate': startDate?.toIso8601String(),
+      'endDate': endDate?.toIso8601String(),
+      'rated': rated,
+      'houseId': house.id,
+      'userId': house.owner?.id
+    };
+  }
 
 }

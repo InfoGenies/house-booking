@@ -8,11 +8,11 @@ class OfferRepository {
   OfferAPI offerAPI = OfferAPI();
 
   Future<List<Offer>?> getOffer({
-    int? cityId,
-    int? houseId,
+    String? cityId,
+    String? houseId,
   }) async {
     List<Map<String, dynamic>>? data =
-        await offerAPI.getOffers(houseId: houseId, cityId: cityId);
+        await offerAPI.getOffers(cityId: cityId, houseId: houseId);
     List<Offer> offers = [];
 
     for (var element in data!) {
@@ -21,7 +21,7 @@ class OfferRepository {
     return offers;
   }
 
-  Future<Offer?> getOfferInfo(int offerId) async {
+  Future<Offer?> getOfferInfo(String offerId) async {
     Map<String, dynamic>? data = await offerAPI.offerInfo(offerId);
     return Offer.fromMap(data!);
   }
@@ -36,16 +36,10 @@ class OfferRepository {
     return null;
   }
 
-  Future<Offer?> updateOfferInfo(
-      {required int offerId, required Offer offer}) async {
+  Future<void> updateOfferInfo(
+      {required String offerId, required Offer offer}) async {
     FormData data = FormData.fromMap(offer.toJson());
-    Map<String, dynamic>? response =
-        await offerAPI.offerInfo(offerId, data: data, method: Methode.PATCH);
-    if (response != null) {
-      Offer responseData = Offer.fromMap(response);
-      return responseData;
-    }
-    return null;
+    await offerAPI.offerInfo(offerId, data: data, method: Methode.PATCH);
   }
 
   Future<Map<String, dynamic>?> changeStatus({
@@ -78,5 +72,10 @@ class OfferRepository {
     });
 
     return offers;
+  }
+
+  Future<void> createOffer(Offer offer) async {
+    FormData data = FormData.fromMap(offer.toJson());
+    await offerAPI.createOffer(data);
   }
 }

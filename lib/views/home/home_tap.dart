@@ -21,6 +21,24 @@ class HomeTap extends StatefulWidget {
 
 class _HomeTapState extends State<HomeTap> {
   ScrollController offersScrollController = ScrollController();
+  OfferController offerController = Get.put(OfferController());
+  HouseController houseController = Get.find<HouseController>();
+
+
+  @override
+  void initState() {
+    if(offerController.offers.isEmpty){
+      offerController.getOffers();
+    }
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    offerController.offers.clear();
+    super.dispose();
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +46,7 @@ class _HomeTapState extends State<HomeTap> {
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
-            await offerController.onInit();
+           // await offerController.onInit();
             await houseController.getCities();
           },
           child: SingleChildScrollView(
@@ -121,4 +139,6 @@ class _HomeTapState extends State<HomeTap> {
       ),
     );
   }
+
+
 }

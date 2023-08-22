@@ -5,16 +5,17 @@ import '../../components/custom_app_bar.dart';
 import '../../components/empty_screen.dart';
 import '../../components/house_widget.dart';
 import '../../constants/constant.dart';
-import '../../controllers/controller.dart';
+
 import '../../controllers/house_controller.dart';
 import '../../models/house.dart';
+import '../../models/user.dart';
 import 'create_house_screen.dart';
 import 'offers_screen.dart';
 
 class MyHousesScreen extends StatefulWidget {
-  final String userId;
+  final User user;
 
-  const MyHousesScreen({Key? key, required this.userId}) : super(key: key);
+  const MyHousesScreen({Key? key, required this.user}) : super(key: key);
 
   @override
   State<MyHousesScreen> createState() => _MyHousesScreenState();
@@ -22,16 +23,15 @@ class MyHousesScreen extends StatefulWidget {
 
 class _MyHousesScreenState extends State<MyHousesScreen> {
   ScrollController myHousesScrollController = ScrollController();
-
+  HouseController houseController = Get.find<HouseController>() ;
   @override
   void initState() {
-    print('the initState is lunched');
+     print('the initState is lunched');
 
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
-      print('the Callback is lunched');
+      // print('the Callback is lunched');
 
-      await houseController.getHouses(null, widget.userId);
-      //  await houseController.getNextPage(parameters: parameters);
+      await houseController.getHouses(null, widget.user.id);
     });
 
     myHousesScrollController.addListener(() {
@@ -46,7 +46,15 @@ class _MyHousesScreenState extends State<MyHousesScreen> {
 
   Future deleteHouse(House house) async {
     await houseController.deleteHouse(house.id!);
-    await houseController.getHouses(null, widget.userId);
+   // await houseController.getHouses(null, widget.user.id);
+    houseController.refreshData(widget.user.id) ;
+  }
+
+  @override
+  void dispose() {
+    houseController.myHouses.clear() ;
+    houseController.isHouseLoading = true ;
+    super.dispose() ;
   }
 
   @override
@@ -75,7 +83,7 @@ class _MyHousesScreenState extends State<MyHousesScreen> {
                             )
                       : RefreshIndicator(
                           onRefresh: () async {
-                             await houseController.getHouses(null, widget.userId);
+                             await houseController.getHouses(null,widget.user.id);
                           },
                           child: SizedBox(
                             height: double.infinity,
@@ -142,6 +150,7 @@ class _MyHousesScreenState extends State<MyHousesScreen> {
                                               print('edit======');
                                               Get.to(
                                                 () => CreateHouseScreen(
+                                                  user: widget.user,
                                                   house: houseController
                                                       .myHouses[index],
                                                   isUpdate: true,
@@ -183,7 +192,7 @@ class _MyHousesScreenState extends State<MyHousesScreen> {
           FontAwesomeIcons.houseMedical,
           color: Colors.white,
         ),
-        onPressed: () => Get.to(() => CreateHouseScreen()),
+        onPressed: () => Get.to(() => CreateHouseScreen(user: widget.user,)),
       ),
     );
   }

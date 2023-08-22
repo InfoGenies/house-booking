@@ -1,7 +1,4 @@
-
-
 import 'package:image_picker/image_picker.dart';
-
 class FilePickerHelper {
   static Future<String?> imagePicker({int imageQuality = 25}) async {
     // ignore: invalid_use_of_visible_for_testing_member

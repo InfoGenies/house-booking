@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 
 import '../constants/constant.dart';
 
+// TextEditingController juste to handle user input like set text
+// the Global Key in forms used to validate the input like the text is not null
 class CustomTextFormField extends StatefulWidget {
   final TextEditingController? controller;
   final TextInputType? textInputType;

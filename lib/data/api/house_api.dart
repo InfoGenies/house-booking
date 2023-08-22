@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 
 import 'api.dart';
@@ -27,7 +29,7 @@ class HouseApi {
     return houses;
   }
 
-  Future<Map<String, dynamic>?> createHouse({FormData? data}) async {
+  Future<String?> createHouse({FormData? data}) async {
     String url = '$baseUrl/houses/create_house';
 
     Response response = await dio
@@ -38,7 +40,7 @@ class HouseApi {
     )
         .onError<DioError>(
       (error, stackTrace) {
-        // print(error.response.data);
+         print('the error while we create house is ${error.response!.data}');
         throw error;
       },
     );
@@ -47,7 +49,7 @@ class HouseApi {
       throw Exception(response);
     }
 
-    return response.data;
+    return 'Data was created';
   }
 
   Future<Map<String, dynamic>?> houseInfo(
@@ -64,6 +66,7 @@ class HouseApi {
         );
         break;
       case Methode.PATCH:
+        print('the Patch methode was running') ;
         response = await dio
             .patch(url, data: data, options: options)
             .onError<DioError>(
@@ -110,7 +113,8 @@ class HouseApi {
     return cities;
   }
 
-  Future<Response?> deletePicture({int? id}) async {
+  Future<Response?> deletePicture({String? id}) async {
+    print('the api methode delete was called ') ;
     String apiUrl = '$baseUrl/houses/picture/$id';
 
     Response? response = await dio

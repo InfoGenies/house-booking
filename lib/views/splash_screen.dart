@@ -23,7 +23,6 @@ class SplashScreen extends StatelessWidget {
       await authController.initData();
       if (authController.isLogin) {
         await authController.getInfoUser(userId:authController.getId());
- //       await houseController.getHouses(null,authController.getId());
 
         await Get.offAll(
           () => const HomeView(),

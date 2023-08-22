@@ -71,8 +71,7 @@ class HouseWidget extends StatelessWidget {
                 borderRadius: borderRadius,
                 child: (offer?.house ?? house)!.pictures.isNotEmpty
                     ? Image.network(
-                        baseUrl +
-                            (offer?.house ?? house)!.pictures.first.picture,
+                        '$baseUrl/${(offer?.house ?? house)!.pictures.first.picture}',
                         fit: BoxFit.cover,
                       )
                     : Container(

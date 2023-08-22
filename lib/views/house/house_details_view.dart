@@ -8,7 +8,6 @@ import '../../components/custom_app_bar.dart';
 import '../../components/description_viewer.dart';
 import '../../components/map_apps.dart';
 import '../../components/pictures_slider.dart';
-import '../../components/rating_widget.dart';
 import '../../components/rooms_number_widget.dart';
 import '../../components/stars_widget.dart';
 import '../../components/submit_button.dart';
@@ -38,6 +37,7 @@ class HouseDetailsView extends StatefulWidget {
 
 class _HouseDetailsViewState extends State<HouseDetailsView> {
   ScrollController scrollController = ScrollController();
+  FavoriteController favoriteController = Get.find<FavoriteController>() ;
 
   EdgeInsets margin = EdgeInsets.symmetric(
     horizontal: Get.width * 0.03,
@@ -329,5 +329,11 @@ class _HouseDetailsViewState extends State<HouseDetailsView> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    favoriteController.changeLoadingState(true) ;
+    super.dispose() ;
   }
 }

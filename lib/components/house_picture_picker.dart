@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:house_booking/data/api/api.dart';
 
 import '../constants/constant.dart';
 import '../helpers/FilePickerHelper.dart';
@@ -39,55 +40,56 @@ class _HousePicturePickerState extends State<HousePicturePicker> {
             borderRadius: borderRadius,
             image: index != widget.pictures.length
                 ? widget.pictures[index].isUrl
-                ? DecorationImage(
-              image: NetworkImage(widget.pictures[index].picture),
-              fit: BoxFit.cover,
-            )
-                : DecorationImage(
-              image: FileImage(File(widget.pictures[index].picture)),
-              fit: BoxFit.cover,
-            )
+                    ? DecorationImage(
+                        image: NetworkImage('$baseUrl/${widget.pictures[index].picture}'),
+                        fit: BoxFit.cover,
+                      )
+                    : DecorationImage(
+                        image: FileImage(File(widget.pictures[index].picture)),
+                        fit: BoxFit.cover,
+                      )
                 : null,
           ),
           child: index == widget.pictures.length
               ? InkWell(
-            onTap: () async {
-              String? image = await FilePickerHelper.imagePicker()
-                  .then((value) => value);
-              if (image != null) {
-                Picture picture = Picture(picture: image, isUrl: false);
-                widget.pictures.add(picture);
-                if (widget.onChange != null) {
-                  widget.onChange!(widget.pictures);
-                }
-                setState(() {});
-              }
-            },
-            child: const Icon(
-              Icons.add,
-              color: deepPrimaryColor,
-            ),
-          )
-              : Align(
-            alignment: Alignment.topRight,
-            child: IconButton(
-              onPressed: () {
-                if (widget.onRemove != null) {
-                  widget.onRemove!(widget.pictures[index]);
-                }
-                widget.pictures.removeAt(index);
-                if (widget.onChange != null) {
-                  widget.onChange!(widget.pictures);
-                }
+                  onTap: () async {
+                    String? image = await FilePickerHelper.imagePicker()
+                        .then((value) => value);
 
-                setState(() {});
-              },
-              icon: const Icon(
-                Icons.close,
-                color: Colors.red,
-              ),
-            ),
-          ),
+                    if (image != null) {
+                      Picture picture = Picture(picture: image, isUrl: false);
+                      widget.pictures.add(picture);
+                      if (widget.onChange != null) {
+                        widget.onChange!(widget.pictures);
+                      }
+                      setState(() {});
+                    }
+                  },
+                  child: const Icon(
+                    Icons.add,
+                    color: deepPrimaryColor,
+                  ),
+                )
+              : Align(
+                  alignment: Alignment.topRight,
+                  child: IconButton(
+                    onPressed: () {
+                      if (widget.onRemove != null) {
+                        widget.onRemove!(widget.pictures[index]);
+                      }
+                      widget.pictures.removeAt(index);
+                      if (widget.onChange != null) {
+                        widget.onChange!(widget.pictures);
+                      }
+
+                      setState(() {});
+                    },
+                    icon: const Icon(
+                      Icons.close,
+                      color: Colors.red,
+                    ),
+                  ),
+                ),
         );
       },
     );

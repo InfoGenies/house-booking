@@ -5,8 +5,8 @@ import 'api.dart';
 
 class OfferAPI {
   Future<List<Map<String, dynamic>>?> getOffers({
-    int? cityId,
-    int? houseId,
+    String? cityId,
+    String? houseId,
   }) async {
     String apiUrl = '$baseUrl/houses/fetch_offers/';
 
@@ -27,7 +27,6 @@ class OfferAPI {
   }
 
   Future<House> getHouse(String houseId, String apiToken) async {
-
     String apiUrl = '$baseUrl/houses/house/$houseId';
 
     options = Options(headers: {
@@ -43,7 +42,7 @@ class OfferAPI {
       },
     );
     if (response.statusCode == 200 || response.statusCode == 201) {
-      print("the house is ${response.data['data']}") ;
+      print("the house is ${response.data['data']}");
       return House.fromMap(response.data['data']);
     } else {
       throw Exception('Failed to get house');
@@ -72,7 +71,7 @@ class OfferAPI {
   }
 
   Future<Map<String, dynamic>?> offerInfo(
-    int offerId, {
+    String offerId, {
     Methode method = Methode.GET,
     FormData? data,
   }) async {

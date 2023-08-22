@@ -14,12 +14,15 @@ import '../../models/City.dart';
 import '../../models/house.dart';
 import '../../models/municipality.dart';
 import '../../models/picture.dart';
+import '../../models/user.dart';
 
 class CreateHouseScreen extends StatefulWidget {
   House? house;
   bool isUpdate;
+  User? user;
 
-  CreateHouseScreen({Key? key, this.house, this.isUpdate = false})
+  CreateHouseScreen(
+      {Key? key, required this.user, this.house, this.isUpdate = false})
       : super(key: key);
 
   @override
@@ -105,6 +108,7 @@ class _CreateHouseScreenState extends State<CreateHouseScreen> {
       kitchens: int.parse(kitchenController.text),
       locationLatitude: double.parse(locationLatitudeController.text),
       locationLongitude: double.parse(locationLongitudeController.text),
+      owner: widget.user,
       municipality: municipality,
       pictures: pictures,
     );
@@ -146,13 +150,16 @@ class _CreateHouseScreenState extends State<CreateHouseScreen> {
     initHouse();
     if (!widget.isUpdate) {
       await houseController.createHouse(house!);
+      await houseController.refreshData(widget.user?.id);
     } else {
       await houseController.updateHouse(
         id: widget.house!.id!,
         data: house!,
         deletePic: deletedPictures,
       );
+      await houseController.refreshData(widget.user?.id);
     }
+    print('go back to the current page ') ;
     Get.back();
   }
 
@@ -216,7 +223,7 @@ class _CreateHouseScreenState extends State<CreateHouseScreen> {
                         HousePicturePicker(
                           pictures: pictures,
                           onRemove: (pic) {
-                             if (pic.isUrl) deletedPictures.add(pic);
+                            if (pic.isUrl) deletedPictures.add(pic);
                           },
                           onChange: (pcts) {
                             pictures = pictures;
@@ -246,24 +253,28 @@ class _CreateHouseScreenState extends State<CreateHouseScreen> {
     );
   }
 
-  Widget roomsNumberInput() => Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          numberField(
-            'Bedroom',
-            bedroomController,
-          ),
-          const SizedBox(width: 5),
-          numberField(
-            'Bathroom',
-            bathroomController,
-          ),
-          const SizedBox(width: 5),
-          numberField(
-            'Kitchen',
-            kitchenController,
-          ),
-        ],
+  Widget roomsNumberInput() => Form(
+        key: roomsKey,
+        autovalidateMode: AutovalidateMode.always,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            numberField(
+              'Bedroom',
+              bedroomController,
+            ),
+            const SizedBox(width: 5),
+            numberField(
+              'Bathroom',
+              bathroomController,
+            ),
+            const SizedBox(width: 5),
+            numberField(
+              'Kitchen',
+              kitchenController,
+            ),
+          ],
+        ),
       );
 
   Widget addressInput() => Row(
@@ -280,7 +291,6 @@ class _CreateHouseScreenState extends State<CreateHouseScreen> {
                 cityController.text = value.name!;
                 municipality = null;
                 municipalityController.text = '';
-                print('the id of this city is ${city!.id!}');
                 houseController.getMunicipalities(cityId: city!.id!);
               }
             },
@@ -312,8 +322,6 @@ class _CreateHouseScreenState extends State<CreateHouseScreen> {
           locationLatitudeController.text = position?.latitude.toString() ?? '';
           locationLongitudeController.text =
               position?.longitude.toString() ?? '';
-          print(position?.latitude);
-          print(position?.longitude);
         } catch (e) {
           Get.snackbar(
             '',
