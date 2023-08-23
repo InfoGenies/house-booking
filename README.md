@@ -8,13 +8,13 @@ A new Flutter project. Welcome to HouseBooker, the cutting-edge Flutter applicat
 ![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F369655205_810142277250038_1047651520908959203_n.jpg?alt=media&token=0e3f000c-589d-4cfe-b0a8-465dd05de48d)|![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F367499847_1316810785631456_7054148136731071839_n.jpg?alt=media&token=b5df9f91-4320-4ab6-a5c7-99a9b472becf)|![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F368999728_6375675305894058_7676805411416628640_n.jpg?alt=media&token=d91e75a2-77a2-43e0-b317-6d1e830850a2) | ![]()|![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F368812358_958624985211707_6130432642308310610_n.jpg?alt=media&token=fb03e7f9-d05a-407a-9b8d-cf0acfb3297e)|![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F367430958_249435030768665_1562086045623419340_n.jpg?alt=media&token=a14acb24-4525-42a3-b3a0-ee36946976d1) 
 
 ## Table 2
-EmptyProductPage         |   CartePage1     |  CartePage2  |  SavingOrderPage1 |   SavingOrderPage2   |  SavingOrderPage3 
+EmptyfavoriteView         |   FavoriteView     |  ProfilView  |  LoadingHouseView |   EmptyHouseView   |  CreateHouseView 
 :-------------------------:|:-------------------------:|:-------------------------: | :-------------------------:|:-------------------------:|:-------------------------:
-![]()|![]()|![]() | ![]()|![]()|![]()
+![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F370080640_1023841735302683_7531405616119590031_n.jpg?alt=media&token=67499969-7a6b-40fe-b8b1-b52039b8e947)|![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F369922117_2568340129997222_5281648639019011295_n.jpg?alt=media&token=9e7461e2-eb45-43ac-9415-9f8c0ac18644)|![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F368925959_322840870160473_7064747819019795510_n.jpg?alt=media&token=45ef2b07-7e14-4684-bbc9-832cc2f2a624) | ![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F367440519_1645853505935705_5090967705231397795_n.jpg?alt=media&token=7688457b-4c9f-4cd7-a490-f3be979acc54)|![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F369689493_1248892535810722_8541869601411397578_n.jpg?alt=media&token=58cc9cf1-34d2-4a44-8d81-954863d5e857)|![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F369030756_6963989350302103_5205551284544047029_n.jpg?alt=media&token=13f22df5-cf4e-4cfb-b15a-62b5331a1950)
 ## Table 3
-ProfilPage         |   UserInfoPage     |  OrderPage  |  DetailedOrderPage |   NoConnectionPage |
+HouseView         |   LoadingOffersView     |  EmptyOffersView  |  CreateOfferView |   OffersView |
 :-------------------------:|:-------------------------:|:-------------------------: | :-------------------------:| :-------------------------:|
-![](https://firebasestorage.googleapis.com/v0/b/housebooking-308d5.appspot.com/o/house_booking_screen%2F368925959_322840870160473_7064747819019795510_n.jpg?alt=media&token=45ef2b07-7e14-4684-bbc9-832cc2f2a624)|![]()|![]() | ![]()|![]() 
+![]()|![]()|![]() | ![]()|![]() 
 
 ## Directory Structure
 ```
